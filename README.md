@@ -1,2 +1,2 @@
 # online-shopping-microservices-architectures
-![Project architecture]("OnlineShopping.png")
+![Project architecture]("Online Shopping.png")
