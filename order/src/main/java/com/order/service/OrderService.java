@@ -7,7 +7,7 @@ import com.order.dto.OrderResponse;
 
 public interface OrderService {
 
-	boolean placeOrder(OrderRequest orderRequest);
+	String placeOrder(OrderRequest orderRequest);
 
 	List<OrderResponse> getAllOrders();
 }
