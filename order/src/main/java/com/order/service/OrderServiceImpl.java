@@ -3,15 +3,21 @@ package com.order.service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.sleuth.Span;
 import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
+import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.order.config.ApplicationPropertiesConfig;
 import com.order.dto.InventoryRequest;
 import com.order.dto.InventoryResponse;
 import com.order.dto.OrderRequest;
@@ -19,44 +25,43 @@ import com.order.dto.OrderResponse;
 import com.order.event.OrderPlacedEvent;
 import com.order.mapper.OrderMapper;
 import com.order.model.Order;
-import com.order.model.OrderLineItem;
+import com.order.model.LineItem;
 import com.order.repository.OrderRepository;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
 	private final OrderRepository orderRepository;
 	private final OrderMapper orderMapper;
 	private final WebClient.Builder webClientBuilder;
 	private final Tracer tracer;
-	private final KafkaTemplate kafkaTemplate;
+	private final KafkaTemplate<String,OrderPlacedEvent> kafkaTemplate;
+	
+	private final ApplicationPropertiesConfig applicationPropertiesConfig;
 	
 	@Override
 	public String placeOrder(OrderRequest orderRequest) {
 		Order order = new Order();
-		order.setOrderNumber(UUID.randomUUID().toString());
-		order.setOrderLineItems(orderRequest.getOrderLineItems().stream()
+		order.setNumber(UUID.randomUUID().toString());
+		order.setLineItems(orderRequest.getOrderLineItems().stream()
 				.map(orderMapper::mapToOrderLineItem)
 				.collect(Collectors.toList()));
 		
-		List<String> skuCodes = order.getOrderLineItems().stream()
-				.map(OrderLineItem::getSkuCode)
+		List<String> skuCodes = order.getLineItems().stream()
+				.map(LineItem::getSkuCode)
 				.collect(Collectors.toList());
 				
-		List<InventoryRequest> inventoryRequests = order.getOrderLineItems().stream()
+		List<InventoryRequest> inventoryRequests = order.getLineItems().stream()
 				.map(oli -> new InventoryRequest(oli.getSkuCode(),oli.getQuantity()))
 				.collect(Collectors.toList());
 		
-//		 InventoryResponse[] inventoryResponses = webClientBuilder.build().get()
-//				.uri("http://inventory/api/inventories",uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
-//				.retrieve()
-//				.bodyToMono(InventoryResponse[].class)
-//				.block();
+
 		
 		// custom span for tracing
 		Span inventoryServiceLookup = tracer.nextSpan().name("inventoryServiceLookUP");
@@ -70,6 +75,12 @@ public class OrderServiceImpl implements OrderService {
 				 .retrieve()
 				 .bodyToMono(InventoryResponse[].class)
 				 .block();
+		    
+//			 InventoryResponse[] inventoryResponses = webClientBuilder.build().get()
+//			.uri("http://localhost:8082/api/inventories",uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
+//			.retrieve()
+//			.bodyToMono(InventoryResponse[].class)
+//			.block();
 		 
 		 boolean inStock = false;
 		 
@@ -80,7 +91,12 @@ public class OrderServiceImpl implements OrderService {
 		 if(inStock) {
 			Order placedOrder = orderRepository.save(order);
 			log.info("Order : {} has been placed",placedOrder);
-			kafkaTemplate.send("placed orders", new OrderPlacedEvent(placedOrder.getOrderNumber()));
+			
+			OrderPlacedEvent orderPlacedEvent = new OrderPlacedEvent();
+			BeanUtils.copyProperties(order, orderPlacedEvent);
+			
+			sendMessage(orderPlacedEvent);
+			
 			return "Order is placed successfully !";
 		}else {
 			return "Order can not be placed at this moment, because product are out of stock";
@@ -98,6 +114,18 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepository.findAll().stream()
 				.map(orderMapper::mapToOrderResponse)
 				.collect(Collectors.toList());
+	}
+	
+	private void sendMessage(OrderPlacedEvent orderPlacedEvent) {
+		 ListenableFuture<SendResult<String, OrderPlacedEvent>> future = kafkaTemplate.send(applicationPropertiesConfig.getDefaultTopic(),orderPlacedEvent);
+		future.completable().whenComplete((result,exception)->{
+			if(exception == null) {
+				log.info("\n\nmessage : {}\n offset: {}", orderPlacedEvent,result.getRecordMetadata().offset());
+			}
+			else {
+				log.info("exception : {}",exception.getMessage());
+			}
+		});
 	}
 
 }

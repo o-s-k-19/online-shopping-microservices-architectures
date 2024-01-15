@@ -8,18 +8,18 @@ import org.springframework.stereotype.Component;
 import com.order.dto.OrderLineItemDTO;
 import com.order.dto.OrderResponse;
 import com.order.model.Order;
-import com.order.model.OrderLineItem;
+import com.order.model.LineItem;
 
 @Component
 public class OrderMapper {
 
-	public OrderLineItem mapToOrderLineItem(OrderLineItemDTO orderLineItemDTO) {
-		OrderLineItem orderLineItem = new OrderLineItem();
+	public LineItem mapToOrderLineItem(OrderLineItemDTO orderLineItemDTO) {
+		LineItem orderLineItem = new LineItem();
 		BeanUtils.copyProperties(orderLineItemDTO, orderLineItem);
 		return orderLineItem;
 	}
 	
-	public OrderLineItemDTO mapToOrderLineItemDTO(OrderLineItem orderLineItem) {
+	public OrderLineItemDTO mapToOrderLineItemDTO(LineItem orderLineItem) {
 		OrderLineItemDTO orderLineItemDTO = new OrderLineItemDTO();
 		BeanUtils.copyProperties(orderLineItem, orderLineItemDTO);
 		return orderLineItemDTO;
@@ -29,7 +29,7 @@ public class OrderMapper {
 		OrderResponse orderResponse = new OrderResponse();
 		BeanUtils.copyProperties(order, orderResponse);
 		orderResponse.setOrderLineItems(
-				order.getOrderLineItems()
+				order.getLineItems()
 				.stream()
 				.map(this::mapToOrderLineItemDTO)
 				.collect(Collectors.toList())

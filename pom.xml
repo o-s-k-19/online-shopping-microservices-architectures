@@ -32,6 +32,7 @@
 		<module>inventory</module>
 		<module>discovery-register-server</module>
 		<module>api-gateway</module>
+		<module>Notification</module>
 	</modules>
 
 	<dependencyManagement>

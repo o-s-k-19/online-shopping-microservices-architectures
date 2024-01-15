@@ -10,7 +10,7 @@ import com.inventory.model.Inventory;
 import com.inventory.repository.InventoryRepository;
 
 @SpringBootApplication
-@EnableEurekaClient
+//@EnableEurekaClient
 public class InventoryServiceApplication {
 
 	public static void main(String[] args) {

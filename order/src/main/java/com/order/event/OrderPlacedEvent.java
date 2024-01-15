@@ -1,5 +1,9 @@
 package com.order.event;
 
+import java.util.List;
+
+import com.order.model.LineItem;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderPlacedEvent {
-
-    private String orderNumber;
+	private String number;
+	private List<LineItem> lineItems;
 }
