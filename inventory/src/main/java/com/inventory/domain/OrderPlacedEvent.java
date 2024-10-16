@@ -1,8 +1,6 @@
-package com.inventory.event;
+package com.inventory.domain;
 
 import java.util.List;
-
-import com.inventory.model.LineItem;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

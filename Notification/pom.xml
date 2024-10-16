@@ -11,9 +11,6 @@
 	<artifactId>notification</artifactId>
 	<name>notification</name>
 	<description>notification service</description>
-	<properties>
-		<java.version>11</java.version>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -28,14 +25,7 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-sleuth</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>

@@ -1,4 +1,4 @@
-package com.inventory.config;
+package com.inventory.application;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import com.inventory.event.OrderPlacedEvent;
+import com.inventory.domain.OrderPlacedEvent;
 
 import lombok.RequiredArgsConstructor;
 

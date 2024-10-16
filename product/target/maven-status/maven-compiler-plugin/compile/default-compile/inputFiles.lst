@@ -1,0 +1,9 @@
+D:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\product\src\main\java\com\product\controller\ProductController.java
+D:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\product\src\main\java\com\product\dto\ProductRequest.java
+D:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\product\src\main\java\com\product\dto\ProductResponse.java
+D:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\product\src\main\java\com\product\mapper\ProductMapper.java
+D:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\product\src\main\java\com\product\model\Product.java
+D:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\product\src\main\java\com\product\ProductServiceApplication.java
+D:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\product\src\main\java\com\product\repository\ProductRepository.java
+D:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\product\src\main\java\com\product\service\ProductService.java
+D:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\product\src\main\java\com\product\service\ProductServiceImpl.java

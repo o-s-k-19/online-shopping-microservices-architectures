@@ -1,0 +1,17 @@
+com\inventory\application\InventoryServiceImpl.class
+com\inventory\domain\OrderPlacedEvent.class
+com\inventory\domain\InventoryRepository.class
+com\inventory\ui\package-info.class
+com\inventory\application\InventoryResponse.class
+com\inventory\domain\package-info.class
+com\inventory\application\InventoryResponse$InventoryResponseBuilder.class
+com\inventory\application\KafkaConsumerConfig.class
+com\inventory\InventoryServiceApplication.class
+com\inventory\application\package-info.class
+com\inventory\domain\LineItem.class
+com\inventory\application\ApplicationPropertiesConfig.class
+com\inventory\application\InventoryService.class
+com\inventory\ui\InventoryController.class
+com\inventory\application\InventoryRequest.class
+com\inventory\ui\GlobalExceptionHandler.class
+com\inventory\domain\Inventory.class

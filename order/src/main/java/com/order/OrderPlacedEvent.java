@@ -1,8 +1,6 @@
-package com.order.event;
+package com.order;
 
 import java.util.List;
-
-import com.order.model.LineItem;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

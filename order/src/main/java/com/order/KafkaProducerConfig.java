@@ -1,4 +1,4 @@
-package com.order.config;
+package com.order;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +12,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.kafka.support.serializer.StringOrBytesSerializer;
-
-import com.order.event.OrderPlacedEvent;
 
 import lombok.RequiredArgsConstructor;
 

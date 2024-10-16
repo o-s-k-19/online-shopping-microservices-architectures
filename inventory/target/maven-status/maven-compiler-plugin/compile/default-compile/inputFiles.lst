@@ -1,0 +1,16 @@
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\application\ApplicationPropertiesConfig.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\application\InventoryRequest.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\application\InventoryResponse.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\application\InventoryService.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\application\InventoryServiceImpl.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\application\KafkaConsumerConfig.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\application\package-info.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\domain\Inventory.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\domain\InventoryRepository.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\domain\LineItem.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\domain\OrderPlacedEvent.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\domain\package-info.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\InventoryServiceApplication.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\ui\GlobalExceptionHandler.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\ui\InventoryController.java
+d:\_IT\Dev\Programmation JAVA\Projects\online-shopping-microservices-architectures\inventory\src\main\java\com\inventory\ui\package-info.java

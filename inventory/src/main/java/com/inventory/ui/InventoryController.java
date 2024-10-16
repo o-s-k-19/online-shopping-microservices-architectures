@@ -1,4 +1,4 @@
-package com.inventory.controller;
+package com.inventory.ui;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inventory.dto.InventoryRequest;
-import com.inventory.dto.InventoryResponse;
-import com.inventory.service.InventoryService;
+import com.inventory.application.InventoryRequest;
+import com.inventory.application.InventoryResponse;
+import com.inventory.application.InventoryService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -27,7 +28,7 @@ public class InventoryController {
 	
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<InventoryResponse> checkIfInStock(@RequestBody InventoryRequest[] inventoryRequests) {
+	public List<InventoryResponse> checkIfInStock(@RequestBody @Valid InventoryRequest[] inventoryRequests) {
 		return inventoryService.isInStock(Arrays.asList(inventoryRequests));
 	}
 	

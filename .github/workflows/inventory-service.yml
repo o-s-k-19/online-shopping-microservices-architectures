@@ -1,0 +1,41 @@
+name: inventory-service
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "inventory/**"
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./inventory
+    defaults:
+      run:
+        working-directory: ${{ env.working-directory }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "maven"
+
+      - name: Build with Maven
+        run: ./mvnw -ntp verify
+
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Build and push Docker image
+        run: ./mvnw -ntp spring-boot:build-image -DskipTests && docker push ${{ secrets.DOCKER_USERNAME }}/online-shopping-inventory-service

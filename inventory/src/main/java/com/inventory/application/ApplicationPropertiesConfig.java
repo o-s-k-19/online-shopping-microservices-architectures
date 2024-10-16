@@ -1,4 +1,4 @@
-package com.inventory.config;
+package com.inventory.application;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

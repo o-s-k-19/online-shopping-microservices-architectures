@@ -1,0 +1,4 @@
+com\order\OrderRepositoryTests.class
+com\order\OrderServiceTests.class
+com\order\OrderControllerTests.class
+com\order\OrderServiceApplicationTests.class

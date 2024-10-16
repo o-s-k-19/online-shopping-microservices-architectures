@@ -1,14 +1,9 @@
-package com.order.mapper;
+package com.order;
 
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
-
-import com.order.dto.OrderLineItemDTO;
-import com.order.dto.OrderResponse;
-import com.order.model.Order;
-import com.order.model.LineItem;
 
 @Component
 public class OrderMapper {

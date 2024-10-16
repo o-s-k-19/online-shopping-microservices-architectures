@@ -8,6 +8,17 @@ services:
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root
+      POSTGRES_DB: postgres
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "root"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
   mysql:
     image: mysql:8.0
     environment:

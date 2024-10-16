@@ -1,4 +1,4 @@
-package com.order.config;
+package com.order;
 
 import java.util.HashMap;
 import java.util.Map;

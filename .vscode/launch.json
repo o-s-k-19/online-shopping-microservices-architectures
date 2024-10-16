@@ -1,0 +1,64 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-DiscoveryRegisterServerApplication<discovery-register-server>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.discovery.DiscoveryRegisterServerApplication",
+      "projectName": "discovery-register-server",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-ApiGatewayApplication<api-gateway>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.apigateway.ApiGatewayApplication",
+      "projectName": "api-gateway",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-InventoryServiceApplication<inventory>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.inventory.InventoryServiceApplication",
+      "projectName": "inventory",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-NotificationServiceApplication<notification>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.notification.NotificationServiceApplication",
+      "projectName": "notification",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-OrderServiceApplication<order>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.order.OrderServiceApplication",
+      "projectName": "order",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-ProductServiceApplication<product>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.product.ProductServiceApplication",
+      "projectName": "product",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

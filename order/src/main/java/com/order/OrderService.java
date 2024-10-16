@@ -1,13 +1,15 @@
-package com.order.service;
+package com.order;
 
-import java.util.List;
-
-import com.order.dto.OrderRequest;
-import com.order.dto.OrderResponse;
+import org.springframework.data.domain.Page;
 
 public interface OrderService {
 
-	String placeOrder(OrderRequest orderRequest);
+	OrderResponse findById(Long id) throws OrderNotFoundException;
 
-	List<OrderResponse> getAllOrders();
+	void deleteById(Long id) throws OrderNotFoundException;
+
+	OrderResponse create(OrderRequest orderRequest) throws OutOfStockException;
+
+	Page<OrderResponse> findAll(int size, int page);
+
 }

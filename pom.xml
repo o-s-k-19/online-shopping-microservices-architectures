@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.14</version>
-		<relativePath /> <!-- lookup parent from repository -->
-	</parent>
-
+	<url />
+	<licenses>
+		<license />
+	</licenses>
+	<developers>
+		<developer>
+			<name>Ousseini</name>
+		</developer>
+	</developers>
+	<scm>
+		<connection />
+		<developerConnection />
+		<tag />
+		<url />
+	</scm>
 	<groupId>com.microservice</groupId>
 	<artifactId>onlineshopping</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -21,10 +28,19 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
-		<spring-cloud.version>2021.0.2</spring-cloud.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<spring-cloud.version>2023.0.3</spring-cloud.version>
+		<spotless.version>2.43.0</spotless.version>
+		<docker.image.name>osk19/online-shopping-${project.artifactId}-service</docker.image.name>
 	</properties>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.3.3</version>
+		<relativePath />
+	</parent>
 
 	<modules>
 		<module>product</module>
@@ -32,13 +48,58 @@
 		<module>inventory</module>
 		<module>discovery-register-server</module>
 		<module>api-gateway</module>
-		<module>Notification</module>
+		<module>notification</module>
 	</modules>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-brave</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.zipkin.reporter2</groupId>
+			<artifactId>zipkin-reporter-brave</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
 	<dependencyManagement>
-		
+
 		<dependencies>
-			
+
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
@@ -46,7 +107,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-		
+
 			<dependency>
 				<groupId>org.testcontainers</groupId>
 				<artifactId>testcontainers-bom</artifactId>
@@ -54,19 +115,28 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			
+
 		</dependencies>
-		
+
 	</dependencyManagement>
-	
-	
+
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
+					<image>
+						<name>${docker.image.name}</name>
+					</image>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -75,7 +145,52 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>io.github.git-commit-id</groupId>
+				<artifactId>git-commit-id-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>${spotless.version}</version>
+				<configuration>
+
+					<ratchetFrom>origin/main</ratchetFrom>
+					<formats>
+
+						<format>
+
+							<includes>
+								<include>.gitattributes</include>
+								<include>.gitignore</include>
+							</includes>
+
+							<trimTrailingWhitespace />
+							<endWithNewline />
+							<indent>
+								<tabs>true</tabs>
+								<spacesPerTab>4</spacesPerTab>
+							</indent>
+						</format>
+					</formats>
+
+					<java>
+
+						<googleJavaFormat>
+							<version>1.18.1</version>
+							<style>AOSP</style>
+							<reflowLongStrings>true</reflowLongStrings>
+							<formatJavadoc>false</formatJavadoc>
+						</googleJavaFormat>
+
+
+						<licenseHeader>
+							<content>/* (C)$YEAR */</content>
+						</licenseHeader>
+					</java>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
