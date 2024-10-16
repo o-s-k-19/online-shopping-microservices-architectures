@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.inventory.domain.LineItem;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -52,17 +53,18 @@ public class InventoryServiceImpl implements InventoryService {
 	@KafkaHandler
 	public void updateInventory(OrderPlacedEvent orderPlacedEvent) {
 		log.info("\n\n{}\n\n", orderPlacedEvent);
-		orderPlacedEvent.getLineItems().stream().forEach(item -> {
-			Optional<Inventory> optInventory = inventoryRepository.findBySkuCode(item.getSkuCode());
-			if (optInventory.isPresent()) {
-				Inventory inventory = optInventory.get();
-				inventory.setQuantity(
-						inventory.getQuantity() > item.getQuantity() ? inventory.getQuantity() - item.getQuantity()
-								: item.getQuantity() - inventory.getQuantity());
-				inventoryRepository.save(inventory);
-			}
-		});
+		orderPlacedEvent.getLineItems().stream().forEach(this::accept);
 
 	}
 
+	private void accept(LineItem item) {
+		Optional<Inventory> optInventory = inventoryRepository.findBySkuCode(item.getSkuCode());
+		if (optInventory.isPresent()) {
+			Inventory inventory = optInventory.get();
+			inventory.setQuantity(
+					inventory.getQuantity() > item.getQuantity() ? inventory.getQuantity() - item.getQuantity()
+							: item.getQuantity() - inventory.getQuantity());
+			inventoryRepository.save(inventory);
+		}
+	}
 }
