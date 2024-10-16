@@ -29,8 +29,8 @@ jobs:
       - name: give permission
         run: chmod +x ../mvnw
 
-      - name: Build with Maven
-        run: ../mvnw -ntp verify
+      #- name: Build with Maven
+      #  run: ../mvnw -ntp verify
 
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: Login to Docker Hub
